@@ -20,7 +20,10 @@ namespace Demo
             Console.Clear();
             try
             {
-                tsResponder = new TSResponder(File.ReadAllBytes("TSA.crt"), File.ReadAllBytes("TSA.key"), "SHA1");
+                byte[] tsa_crt = File.ReadAllBytes("TSA.crt");
+                byte[] tsa_key = File.ReadAllBytes("TSA.key");
+
+                tsResponder = new TSResponder(tsa_crt, tsa_key, "SHA1"); // new TSResponder(File.ReadAllBytes("TSA.crt"), File.ReadAllBytes("TSA.key"), "SHA1");
             }
             catch
             {

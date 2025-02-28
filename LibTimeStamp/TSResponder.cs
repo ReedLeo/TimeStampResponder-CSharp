@@ -41,9 +41,15 @@ namespace LibTimeStamp
                 // 读取 PEM 文件并解析为私钥
                 object pemObject = reader.ReadObject();
 
-                if (pemObject is RsaPrivateCrtKeyParameters rsaPrivateKey)
+                // 判断是否为 PKCS1 格式
+                if (pemObject is RsaKeyParameters rsaPrivateKey)  // PKCS1 格式
                 {
                     this.priKey = rsaPrivateKey;
+                }
+                // 如果是 PKCS8 格式，可以考虑用下面的方式进行处理
+                else if (pemObject is AsymmetricCipherKeyPair keyPair && keyPair.Private is RsaKeyParameters rsaKeyPairPrivateKey)
+                {
+                    this.priKey = rsaKeyPairPrivateKey;
                 }
                 else
                 {
